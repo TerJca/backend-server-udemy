@@ -38,7 +38,8 @@ app.get('/coleccion/:tabla/:busqueda', (req, res) =>
             });
     }
 
-    promesa.then( data => {
+    promesa.then( data => 
+    {
         res.status(200).json({
             ok: true,
             [coleccion]: data
@@ -75,7 +76,7 @@ function buscarHospitales(busqueda, regex)
     return new Promise((resolve, reject) => 
     {
         Hospital.find({nombre: regex})
-        .populate('usuario', 'nombre email')
+        .populate('usuario', 'nombre email img')
         .exec
         (
             (err, hospitales) => 
@@ -98,7 +99,7 @@ function buscarMedicos(busqueda, regex)
     return new Promise((resolve, reject) => 
     {
         Medico.find({nombre: regex})
-        .populate('usuario', 'nombre email')
+        .populate('usuario', 'nombre email img')
         .populate('hospital')
         .exec
         (
@@ -121,7 +122,7 @@ function buscarUsuarios(busqueda, regex)
 {
     return new Promise((resolve, reject) => 
     {
-        Usuario.find({}, 'nombre email role')
+        Usuario.find({}, 'nombre email role img')
             .or([{'nombre': regex}, {'email': regex}])
             .exec(( err, usuarios) => 
             {
